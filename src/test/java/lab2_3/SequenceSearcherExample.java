@@ -1,5 +1,8 @@
 package lab2_3;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.iis.mto.search.SearchResult;
 import edu.iis.mto.search.SearchResult.Builder;
 import edu.iis.mto.search.SequenceSearcher;
@@ -7,6 +10,7 @@ import edu.iis.mto.search.SequenceSearcher;
 public class SequenceSearcherExample implements SequenceSearcher {
 
     public static int counterCalls = 0;
+    public static List<Integer> listOfKeys = new ArrayList<>();
 
     @Override
     public SearchResult search(int key, int[] seq) {
@@ -23,6 +27,7 @@ public class SequenceSearcherExample implements SequenceSearcher {
 
         builder.withFound(isFaound);
         counterCalls++;
+        listOfKeys.add(key);
 
         return builder.build();
     }

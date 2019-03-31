@@ -4,6 +4,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +19,7 @@ public class SimilarityFinderTest {
     public void setUp() {
         similarityFinder = new SimilarityFinder(new SequenceSearcherExample());
         SequenceSearcherExample.counterCalls = 0;
+        SequenceSearcherExample.listOfKeys = new ArrayList<>();
     }
 
     @Test
@@ -98,5 +101,21 @@ public class SimilarityFinderTest {
         int[] seq2 = {1, 4, 435, 32, 13, 43, 656, 8, 97};
         similarityFinder.calculateJackardSimilarity(seq, seq2);
         assertThat(SequenceSearcherExample.counterCalls, is(equalTo(seq.length)));
+    }
+
+    @Test
+    public void testIfMethodSearchFromSequneceSearcherIsCalledWithRightArgs() {
+        int[] seq = {1, 2, 3, 4, 5, 6};
+        int[] seq2 = {1, 4, 435, 32, 13, 43, 656, 8, 97};
+        similarityFinder.calculateJackardSimilarity(seq, seq2);
+        assertThat(SequenceSearcherExample.listOfKeys.toArray(), is(equalTo(seq)));
+    }
+
+    @Test
+    public void testIfMethodSearchFromSequneceSearcherIsCalledWithRightArgs2() {
+        int[] seq = {};
+        int[] seq2 = {1, 4, 435, 32, 13, 43, 656, 8, 97};
+        similarityFinder.calculateJackardSimilarity(seq, seq2);
+        assertThat(SequenceSearcherExample.listOfKeys.toArray(), is(equalTo(seq)));
     }
 }
