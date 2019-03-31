@@ -16,6 +16,7 @@ public class SimilarityFinderTest {
     @Before
     public void setUp() {
         similarityFinder = new SimilarityFinder(new SequenceSearcherExample());
+        SequenceSearcherExample.counterCalls = 0;
     }
 
     @Test
@@ -43,7 +44,7 @@ public class SimilarityFinderTest {
     }
 
     @Test
-    public void testNoIntersectionSequenceSimilarity() {
+    public void testNoIntersectionSequencesSimilarity() {
         int[] seq = {1};
         int[] seq2 = {5};
         double jackardSimilarity = similarityFinder.calculateJackardSimilarity(seq, seq2);
@@ -51,11 +52,20 @@ public class SimilarityFinderTest {
     }
 
     @Test
-    public void testNoIntersectionRandomSequenceSimilarity() {
+    public void testNoIntersectionRandomSequencesSimilarity() {
         int[] seq = {1, 5, 7, 3, -3};
         int[] seq2 = {2, 14, 64, 6};
         double jackardSimilarity = similarityFinder.calculateJackardSimilarity(seq, seq2);
         assertThat(jackardSimilarity, is(equalTo(0.0)));
+    }
+
+    @Test
+    public void testRandomIntersectionSequencesSimilarity() {
+        int[] seq = {1, 2, 3, 4, 5, 6};
+        int[] seq2 = {2, 6, 0, 10, 8, 1};
+        double jackardSimilarity = similarityFinder.calculateJackardSimilarity(seq, seq2);
+
+        assertThat(Math.floor(jackardSimilarity * 100) / 100, is(equalTo(0.33)));
     }
 
 }

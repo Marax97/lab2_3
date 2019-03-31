@@ -6,12 +6,13 @@ import edu.iis.mto.search.SequenceSearcher;
 
 public class SequenceSearcherExample implements SequenceSearcher {
 
-    public int counterCalls = 0;
+    public static int counterCalls = 0;
 
     @Override
     public SearchResult search(int key, int[] seq) {
         Builder builder = SearchResult.builder();
         boolean isFaound = false;
+
         for (int i = 0; i < seq.length; i++) {
             if (seq[i] == key) {
                 builder.withPosition(i);
@@ -19,7 +20,9 @@ public class SequenceSearcherExample implements SequenceSearcher {
                 isFaound = true;
             }
         }
+
         builder.withFound(isFaound);
+        counterCalls++;
 
         return builder.build();
     }
