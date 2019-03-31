@@ -68,4 +68,35 @@ public class SimilarityFinderTest {
         assertThat(Math.floor(jackardSimilarity * 100) / 100, is(equalTo(0.33)));
     }
 
+    @Test
+    public void testValueOfCallsSearchMethodFromSequneceSearcher1() {
+        int[] seq = {1, 2, 3, 4, 5, 6};
+        int[] seq2 = {};
+        similarityFinder.calculateJackardSimilarity(seq, seq2);
+        assertThat(SequenceSearcherExample.counterCalls, is(equalTo(seq.length)));
+    }
+
+    @Test
+    public void testValueOfCallsSearchMethodFromSequneceSearcher2() {
+        int[] seq = {1, 2, 3, 4, 5, 6};
+        int[] seq2 = {1, 4, 435, 32, 13, 43, 656, 8, 97};
+        similarityFinder.calculateJackardSimilarity(seq, seq2);
+        assertThat(SequenceSearcherExample.counterCalls, is(equalTo(seq.length)));
+    }
+
+    @Test
+    public void testValueOfCallsSearchMethodFromSequneceSearcher3() {
+        int[] seq = {1};
+        int[] seq2 = {1, 4, 435, 32, 13, 43, 656, 8, 97};
+        similarityFinder.calculateJackardSimilarity(seq, seq2);
+        assertThat(SequenceSearcherExample.counterCalls, is(equalTo(seq.length)));
+    }
+
+    @Test
+    public void testValueOfCallsSearchMethodFromSequneceSearcher4() {
+        int[] seq = {};
+        int[] seq2 = {1, 4, 435, 32, 13, 43, 656, 8, 97};
+        similarityFinder.calculateJackardSimilarity(seq, seq2);
+        assertThat(SequenceSearcherExample.counterCalls, is(equalTo(seq.length)));
+    }
 }
