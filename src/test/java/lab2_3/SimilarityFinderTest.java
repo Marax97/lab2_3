@@ -36,10 +36,26 @@ public class SimilarityFinderTest {
 
     @Test
     public void testMixedElementInSecondSequenceSimilarity() {
-        int[] seq = {1, 2, 3, 4, 5, 6};
-        int[] seq2 = {3, 2, 6, 1, 5, 4};
+        int[] seq = {1, -2, 3, -4, 5, 6};
+        int[] seq2 = {3, -2, 6, 1, 5, -4};
         double jackardSimilarity = similarityFinder.calculateJackardSimilarity(seq, seq2);
         assertThat(jackardSimilarity, is(equalTo(1.0)));
+    }
+
+    @Test
+    public void testNoIntersectionSequenceSimilarity() {
+        int[] seq = {1};
+        int[] seq2 = {5};
+        double jackardSimilarity = similarityFinder.calculateJackardSimilarity(seq, seq2);
+        assertThat(jackardSimilarity, is(equalTo(0.0)));
+    }
+
+    @Test
+    public void testNoIntersectionRandomSequenceSimilarity() {
+        int[] seq = {1, 5, 7, 3, -3};
+        int[] seq2 = {2, 14, 64, 6};
+        double jackardSimilarity = similarityFinder.calculateJackardSimilarity(seq, seq2);
+        assertThat(jackardSimilarity, is(equalTo(0.0)));
     }
 
 }

@@ -11,8 +11,16 @@ public class SequenceSearcherExample implements SequenceSearcher {
     @Override
     public SearchResult search(int key, int[] seq) {
         Builder builder = SearchResult.builder();
-        builder.withPosition(key);
-        builder.withFound(seq.length - counterCalls++ > 0);
+        boolean isFaound = false;
+        for (int i = 0; i < seq.length; i++) {
+            if (seq[i] == key) {
+                builder.withPosition(i);
+                builder.withFound(true);
+                isFaound = true;
+            }
+        }
+        builder.withFound(isFaound);
+
         return builder.build();
     }
 
