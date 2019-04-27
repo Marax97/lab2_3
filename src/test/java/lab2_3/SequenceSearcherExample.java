@@ -1,7 +1,6 @@
 package lab2_3;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
 import edu.iis.mto.search.SearchResult;
 import edu.iis.mto.search.SearchResult.Builder;
@@ -10,25 +9,21 @@ import edu.iis.mto.search.SequenceSearcher;
 public class SequenceSearcherExample implements SequenceSearcher {
 
     public static int counterCalls = 0;
-    public static List<Integer> listOfKeys = new ArrayList<>();
+    public static Stack<Boolean> valuesStack = new Stack<>();
+    public static Stack<Integer> listOfKeys = new Stack<>();
+
+    public static void fillStack(boolean[] values) {
+        for (boolean value : values) {
+            valuesStack.push(value);
+        }
+    }
 
     @Override
     public SearchResult search(int key, int[] seq) {
         Builder builder = SearchResult.builder();
-        boolean isFaound = false;
-
-        for (int i = 0; i < seq.length; i++) {
-            if (seq[i] == key) {
-                builder.withPosition(i);
-                builder.withFound(true);
-                isFaound = true;
-            }
-        }
-
-        builder.withFound(isFaound);
+        builder.withFound(valuesStack.pop());
         counterCalls++;
-        listOfKeys.add(key);
-
+        listOfKeys.push(key);
         return builder.build();
     }
 
